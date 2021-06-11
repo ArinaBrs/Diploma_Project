@@ -1,0 +1,41 @@
+{% extends 'predictionCharts_form.html' %}
+
+{% block title %}Субъекты РФ{% endblock title%}
+
+{% block scripts %}
+    <script>
+    $(document).ready(function (){
+        var ctx = document.getElementById('line-chart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+              data: {
+                labels: {{ index|safe }},
+                datasets: [{
+                    data: {{ current|safe }},
+                    label: "Текущие значения",
+                    borderColor: "#3e95cd",
+                    fill: false
+                  }, {
+                    data: {{ pred|safe }},
+                    label: "Спрогнозированные значения",
+                    borderColor: "#8e5ea2",
+                    fill: false
+                  }
+                ]
+              },
+              options: {
+                title: {
+                  display: true,
+                  text: "{{ reg|safe }}" + ", " + "{{ indicator|safe }}"
+                }
+              }
+        });
+    });
+    </script>
+{% endblock scripts%}
+
+{% block content %}
+    <div class="chart-container" style="position: relative; height:70vh; width:70vw">
+        <canvas id="line-chart"></canvas>
+    </div>
+{% endblock content%}

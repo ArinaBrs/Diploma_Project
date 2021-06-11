@@ -1,0 +1,36 @@
+{% extends 'regionsCharts_form.html' %}
+
+{% block title %}Субъекты РФ{% endblock title%}
+
+{% block scripts %}
+    <script>
+    $(document).ready(function (){
+        var ctx = document.getElementById('line-chart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+              data: {
+                labels: {{ labels|safe }},
+                datasets: [{
+                    data: {{ data|safe }},
+                    label: "{{ reg|safe }}",
+                    borderColor: "#3e95cd",
+                    fill: false
+                  },
+                ]
+              },
+              options: {
+                title: {
+                  display: true,
+                  text: "{{ file|safe }}"
+                }
+              }
+        });
+    });
+    </script>
+{% endblock scripts%}
+
+{% block content %}
+    <div class="chart-container" style="position: relative; height:60vh; width:60vw">
+        <canvas id="line-chart"></canvas>
+    </div>
+{% endblock content%}
